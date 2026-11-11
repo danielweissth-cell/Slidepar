@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slidepar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Nunito:wght@400;700&family=Oswald:wght@400;600&family=Bebas+Neue&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Lobster&family=Pacifico&family=Caveat:wght@400;700&family=Comfortaa:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Верхняя панель -->
+    <header class="topbar">
+      <div class="brand">
+        <img src="../../assets/logo.png" alt="Slidepar" class="brand-logo" />
+        <span class="brand-name">Slidepar</span>
+      </div>
+
+      <div class="doc-title">
+        <input id="docTitle" type="text" value="Без названия" spellcheck="false" />
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn" id="btnOpen" title="Открыть (Ctrl/Cmd+O)">Открыть</button>
+        <button class="btn" id="btnSave" title="Сохранить (Ctrl/Cmd+S)">Сохранить</button>
+        <button class="btn" id="btnExport" title="Экспорт в PDF (Ctrl/Cmd+E)">PDF</button>
+        <button class="btn btn-accent" id="btnPresent" title="Показ (F5)">▶ Показ</button>
+      </div>
+    </header>
+
+    <div class="main">
+      <!-- Левая панель слайдов -->
+      <aside class="slides-panel">
+        <div class="slides-panel-head">
+          <span>Слайды</span>
+          <button class="icon-btn" id="btnAddSlide" title="Добавить слайд">＋</button>
+        </div>
+        <div class="slides-list" id="slidesList"></div>
+      </aside>
+
+      <!-- Центральная область -->
+      <section class="editor">
+        <div class="toolbar">
+          <div class="tool-group">
+            <button class="tool" data-add="text" title="Текст">T&nbsp;Текст</button>
+            <button class="tool" data-add="rect" title="Прямоугольник">▭</button>
+            <button class="tool" data-add="ellipse" title="Эллипс">⬭</button>
+            <div class="shapes-wrap">
+              <button class="tool" id="btnShapes" title="Фигуры">✦ Фигуры ▾</button>
+              <div class="shapes-menu" id="shapesMenu" hidden></div>
+            </div>
+            <button class="tool" id="btnAddImage" title="Изображение">🖼 Фото</button>
+            <button class="tool" id="btnAddTable" title="Таблица">📋 Таблица</button>
+            <button class="tool" id="btnAddChart" title="Диаграмма">📊 Диаграмма</button>
+            <button class="tool" id="btnWordArt" title="WordArt">✨ WordArt</button>
+            <div class="shapes-wrap">
+              <button class="tool" id="btnIcons" title="Значки">⭐ Значки ▾</button>
+              <div class="shapes-menu" id="iconsMenu" hidden></div>
+            </div>
+            <button class="tool toggle" id="btnDraw" title="Рисование">✏️ Рисование</button>
+          </div>
+
+          <div class="tool-divider"></div>
+
+          <div class="tool-group" id="textFormatGroup">
+            <select id="fontFamily" class="select" title="Шрифт">
+              <optgroup label="Без засечек">
+                <option value="Inter, system-ui, sans-serif">Inter</option>
+                <option value="Roboto, sans-serif">Roboto</option>
+                <option value="Montserrat, sans-serif">Montserrat</option>
+                <option value="Poppins, sans-serif">Poppins</option>
+                <option value="Nunito, sans-serif">Nunito</option>
+                <option value="Comfortaa, sans-serif">Comfortaa</option>
+                <option value="Arial, sans-serif">Arial</option>
+              </optgroup>
+              <optgroup label="Акцидентные">
+                <option value="Oswald, sans-serif">Oswald</option>
+                <option value="'Bebas Neue', sans-serif">Bebas Neue</option>
+              </optgroup>
+              <optgroup label="С засечками">
+                <option value="'Playfair Display', serif">Playfair Display</option>
+                <option value="Merriweather, serif">Merriweather</option>
+                <option value="Lora, serif">Lora</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Times New Roman', serif">Times</option>
+              </optgroup>
+              <optgroup label="Рукописные">
+                <option value="Lobster, cursive">Lobster</option>
+                <option value="Pacifico, cursive">Pacifico</option>
+                <option value="Caveat, cursive">Caveat</option>
+              </optgroup>
+              <optgroup label="Моноширинные">
+                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                <option value="'Courier New', monospace">Courier</option>
+              </optgroup>
+            </select>
+            <input id="fontSize" class="num" type="number" min="8" max="200" value="32" title="Размер" />
+            <button class="tool toggle" data-fmt="bold" title="Жирный"><b>Ж</b></button>
+            <button class="tool toggle" data-fmt="italic" title="Курсив"><i>К</i></button>
+            <button class="tool toggle" data-fmt="underline" title="Подчёркнутый"><u>Ч</u></button>
+            <button class="tool" data-align="left" title="Слева">⯇</button>
+            <button class="tool" data-align="center" title="По центру">≡</button>
+            <button class="tool" data-align="right" title="Справа">⯈</button>
+          </div>
+        </div>
+
+        <!-- Панель рисования -->
+        <div class="draw-toolbar" id="drawToolbar" hidden>
+          <button class="tool draw-tool on" data-tool="pencil" title="Карандаш">✏️ Карандаш</button>
+          <button class="tool draw-tool" data-tool="marker" title="Маркер">🖊 Маркер</button>
+          <button class="tool draw-tool" data-tool="eraser" title="Ластик">🧽 Ластик</button>
+          <span class="tool-divider"></span>
+          <div class="draw-colors" id="drawColors"></div>
+          <input type="color" id="drawColorPick" value="#E8833A" title="Свой цвет" />
+          <span class="tool-divider"></span>
+          <label class="draw-width">Толщина
+            <input type="range" id="drawWidth" min="1" max="36" value="5" />
+            <span id="drawWidthVal">5</span>
+          </label>
+          <span class="tool-divider"></span>
+          <button class="btn small btn-danger" id="drawClear">Очистить слайд</button>
+          <button class="btn small btn-accent" id="drawDone">Готово</button>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+          <div class="canvas" id="canvas">
+            <div id="drawCapture"></div>
+            <div class="selection" id="selection" hidden>
+              <div class="handle" data-h="nw"></div>
+              <div class="handle" data-h="ne"></div>
+              <div class="handle" data-h="sw"></div>
+              <div class="handle" data-h="se"></div>
+              <div class="handle" data-h="n"></div>
+              <div class="handle" data-h="s"></div>
+              <div class="handle" data-h="w"></div>
+              <div class="handle" data-h="e"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="statusbar">
+          <span id="slideCounter">Слайд 1 / 1</span>
+          <span id="savedState">Не сохранено</span>
+        </div>
+      </section>
+
+      <!-- Правая панель свойств -->
+      <aside class="props-panel" id="propsPanel">
+        <div class="props-empty" id="propsEmpty">
+          <p>Выберите объект, чтобы изменить его свойства, или кликните по пустому месту для настройки фона слайда.</p>
+        </div>
+
+        <div class="props-body" id="propsSlide" hidden>
+          <h3>Слайд</h3>
+          <label class="field">
+            <span>Цвет фона</span>
+            <input type="color" id="slideBg" value="#ffffff" />
+          </label>
+          <div class="swatches" id="bgSwatches"></div>
+          <label class="field" style="margin-top:14px;">
+            <span>Переход при показе</span>
+            <select id="slideTransition" class="field-select">
+              <option value="none">Без перехода</option>
+              <optgroup label="Простые">
+                <option value="fade">Проявление</option>
+                <option value="dissolve">Растворение</option>
+                <option value="slide">Сдвиг</option>
+                <option value="slide-up">Сдвиг вверх</option>
+                <option value="push">Панорама</option>
+                <option value="cover">Наплыв</option>
+                <option value="wipe">Открывание</option>
+                <option value="flash">Вспышка</option>
+                <option value="zoom">Приближение</option>
+                <option value="zoomin">Увеличение</option>
+              </optgroup>
+              <optgroup label="Сложные">
+                <option value="rotate">Поворот</option>
+                <option value="cube">Куб</option>
+                <option value="flip">Переворот</option>
+                <option value="gallery">Галерея</option>
+                <option value="fall">Падение</option>
+                <option value="vortex">Воронка</option>
+              </optgroup>
+              <option value="random">Случайный</option>
+            </select>
+          </label>
+          <label class="field" style="margin-top:4px;">
+            <button class="btn small" id="btnTransAll" type="button">Применить переход ко всем</button>
+          </label>
+        </div>
+
+        <div class="props-body" id="propsElement" hidden>
+          <h3 id="propsElType">Объект</h3>
+
+          <div class="field-row">
+            <label class="field small"><span>X</span><input type="number" id="posX" /></label>
+            <label class="field small"><span>Y</span><input type="number" id="posY" /></label>
+          </div>
+          <div class="field-row">
+            <label class="field small"><span>Ширина</span><input type="number" id="posW" /></label>
+            <label class="field small"><span>Высота</span><input type="number" id="posH" /></label>
+          </div>
+
+          <div class="prop-fill">
+            <label class="field"><span id="fillLabel">Заливка</span><input type="color" id="elFill" value="#E8833A" /></label>
+            <label class="field"><span>Контур</span><input type="color" id="elStroke" value="#C9622A" /></label>
+            <label class="field small"><span>Толщина</span><input type="number" id="elStrokeW" min="0" max="40" value="0" /></label>
+          </div>
+
+          <div class="prop-text" hidden>
+            <label class="field"><span>Цвет текста</span><input type="color" id="elTextColor" value="#1a1a1a" /></label>
+            <label class="field">
+              <span>Стиль WordArt</span>
+              <select id="elWordart" class="field-select">
+                <option value="none">Нет</option>
+                <option value="gold">Золото</option>
+                <option value="fire">Огонь</option>
+                <option value="ocean">Океан</option>
+                <option value="purple">Фиолет</option>
+                <option value="outline">Контур</option>
+                <option value="shadow">Тень</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="prop-table" hidden>
+            <div class="field-row">
+              <button class="btn small" id="tblRowPlus">+ строка</button>
+              <button class="btn small" id="tblRowMinus">− строка</button>
+            </div>
+            <div class="field-row" style="margin-top:6px;">
+              <button class="btn small" id="tblColPlus">+ столбец</button>
+              <button class="btn small" id="tblColMinus">− столбец</button>
+            </div>
+            <label class="field" style="margin-top:10px; flex-direction:row; align-items:center; gap:8px;">
+              <input type="checkbox" id="tableHeader" style="width:auto;" /> <span>Строка-заголовок</span>
+            </label>
+            <label class="field small"><span>Размер шрифта</span><input type="number" id="tableFont" min="8" max="80" /></label>
+            <label class="field"><span>Цвет заголовка</span><input type="color" id="tableHeaderFill" /></label>
+            <label class="field"><span>Цвет рамки</span><input type="color" id="tableBorder" /></label>
+            <label class="field"><span>Цвет текста</span><input type="color" id="tableText" /></label>
+          </div>
+
+          <div class="prop-chart" hidden>
+            <label class="field">
+              <span>Тип диаграммы</span>
+              <select id="chartType" class="field-select">
+                <option value="bar">Столбцы</option>
+                <option value="line">Линия</option>
+                <option value="pie">Круговая</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Заголовок</span>
+              <input type="text" id="chartTitle" />
+            </label>
+            <label class="field">
+              <span>Данные (подпись, значение)</span>
+              <textarea id="chartData" rows="6" spellcheck="false"></textarea>
+            </label>
+          </div>
+
+          <label class="field" style="border-top:1px solid var(--line); padding-top:12px;">
+            <span>Анимация появления</span>
+            <select id="elAnim" class="field-select">
+              <option value="none">Нет</option>
+              <option value="fade">Проявление</option>
+              <option value="fly-left">Влёт слева</option>
+              <option value="fly-right">Влёт справа</option>
+              <option value="fly-up">Влёт снизу</option>
+              <option value="zoom">Приближение</option>
+              <option value="pop">Хлопок</option>
+            </select>
+          </label>
+
+          <div class="prop-actions">
+            <button class="btn small" id="btnDup">Дублировать</button>
+            <button class="btn small" id="btnFront">На передний план</button>
+            <button class="btn small" id="btnBack">На задний план</button>
+            <button class="btn small btn-danger" id="btnDelEl">Удалить</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Режим показа -->
+  <div id="presentOverlay" hidden>
+    <div class="present-stage" id="presentStage"></div>
+    <div class="present-hint" id="presentHint">← → стрелки · Esc — выход</div>
+  </div>
+
+  <!-- Тост-уведомления -->
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Temp / local
+*.tmp
+.env
+.env.local
+
+# Slidepar user projects (не выкладываем чужие презентации)
+*.slidepar
